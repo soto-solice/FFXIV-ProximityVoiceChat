@@ -9,6 +9,7 @@ using ProximityVoiceChat.Ninject;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using WebRtcVadSharp;
+using ECommons;
 
 namespace ProximityVoiceChat;
 
@@ -47,12 +48,14 @@ public sealed class PluginInitializer : IDalamudPlugin
 
         // Entrypoint
         this.kernel.Get<Plugin>().Initialize();
+        ECommonsMain.Init(PluginInterface, this);
     }
 
     public void Dispose()
     {
         TaskScheduler.UnobservedTaskException -= OnUnobservedTaskException;
         this.kernel.Dispose();
+        ECommonsMain.Dispose();
     }
 
     private void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)

@@ -1469,6 +1469,9 @@
           "System.Xml.ReaderWriter": "4.3.0"
         }
       },
+      "ecommons": {
+        "type": "Project"
+      },
       "microsoft.mixedreality.webrtc": {
         "type": "Project"
       }

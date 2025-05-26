@@ -60,6 +60,7 @@ public class MainWindow : Window, IPluginUIView, IDisposable
     private readonly Configuration configuration;
     private readonly ConfigWindow configWindow;
     private readonly ConfigWindowPresenter configWindowPresenter;
+    private readonly IGameGui gameGui;
 
     private string? createPrivateRoomButtonText;
     private bool configTabSelected;
@@ -74,7 +75,8 @@ public class MainWindow : Window, IPluginUIView, IDisposable
         MapManager mapChangeHandler,
         Configuration configuration,
         ConfigWindow configWindow,
-        ConfigWindowPresenter configWindowPresenter) : base(PluginInitializer.Name)
+        ConfigWindowPresenter configWindowPresenter,
+        IGameGui gameGui) : base(PluginInitializer.Name)
     {
         this.windowSystem = windowSystem;
         this.pluginInterface = pluginInterface;
@@ -88,6 +90,8 @@ public class MainWindow : Window, IPluginUIView, IDisposable
         this.configWindow = configWindow;
         this.configWindowPresenter = configWindowPresenter;
         windowSystem.AddWindow(this);
+        this.gameGui = gameGui;
+
     }
 
     public override void Draw()
@@ -161,6 +165,33 @@ public class MainWindow : Window, IPluginUIView, IDisposable
             this.joinVoiceRoom.OnNext(Unit.Default);
         }
         ImGui.EndDisabled();
+        var players = new string[10];
+        if (ImGui.Button("Test Read"))
+        {
+            InstanceJoiner ij = new(gameGui);
+            players = ij.getAdventurerList();
+            foreach (string player in players)
+            {
+                //ImGui.Text($"{player}");
+            }
+
+        }
+        if (ImGui.Button("Test Clear"))
+        {
+            InstanceJoiner ij = new(gameGui);
+            ij.clearAtk();
+
+        }
+        if (ImGui.Button("Test Open"))
+        {
+            InstanceJoiner ij = new(gameGui);
+            ij.openAdventurerList();
+
+        }
+        foreach (string player in players)
+        {
+            ImGui.Text($"{player}");
+        }
 
         var dcMsg = this.voiceRoomManager.SignalingChannel?.LatestServerDisconnectMessage;
         if (dcMsg != null)

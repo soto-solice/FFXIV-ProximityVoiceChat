@@ -197,6 +197,57 @@ io.on("connection", (socket) => {
           logger.info(`(${socket.id}) No players found in existing room instances. Creating new instance with number ${instanceNumber}`);
         }
       }
+      const pattern = /Ex(?<DC>[^_]*)/;
+      if (instanceArg.match(pattern)) {
+        if (playersInInstance) {
+          const instanceMatchCounts = {}; // Key: socketRoomName, Value: count of matching players
+
+          for (const p of playersInInstance) {
+            if (p in connections && connections[p].roomName === roomName) {
+              const foundPeer = connections[p];
+              const socketRoomName = getSocketRoomName(foundPeer.roomName, foundPeer.instanceNumber);
+
+              if (!instanceMatchCounts[socketRoomName]) {
+                instanceMatchCounts[socketRoomName] = {
+                  count: 0,
+                  instanceNumber: foundPeer.instanceNumber
+                };
+              }
+              instanceMatchCounts[socketRoomName].count += 1;
+            }
+          }
+
+          // Find the socketRoomName with the highest match count
+          let bestMatch = null;
+          let bestCount = -1;
+
+
+          for (const [socketRoomName, { count, instanceNumber }] of Object.entries(instanceMatchCounts)) {
+            if (count > bestCount) {
+              bestCount = count;
+              bestMatch = instanceNumber;
+            }
+          }
+
+          if (bestMatch !== null) {
+            instanceNumber = bestMatch;
+            logger.info(`(${socket.id}) Best match found with ${bestCount} matching players in instance ${instanceNumber}`);
+          } else {
+            logger.info(`(${socket.id}) No matching instance found among playersInInstance`);
+              if (instanceNumber === 0) {
+              instanceNumber = 1;
+              const room = rooms[roomName];
+              if (room) {
+                while (instanceNumber in room) {
+                  instanceNumber++;
+                }
+              }
+              logger.info(`(${socket.id}) No players found in existing room instances. Creating new instance with number ${instanceNumber}`);
+          }
+          }
+        }
+      }
+
     }
     else {
       // Private room

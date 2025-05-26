@@ -1,0 +1,3 @@
+[submodule "DalamudPlugin/ECommons"]
+	path = DalamudPlugin/ECommons
+	url = https://github.com/NightmareXIV/ECommons.git

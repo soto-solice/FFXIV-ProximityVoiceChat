@@ -43,6 +43,30 @@ namespace ProximityVoiceChat
                 }
             }
 
+        public unsafe int getAdvListLength() {
+            var cMemberList = (AtkUnitBase*)gameGui.GetAddonByName("ContentMemberList");
+            if (cMemberList != null && cMemberList->IsVisible){
+                var textNode = (AtkTextNode*)cMemberList->GetNodeById(20);
+                if (textNode != null)
+                {
+                    var text = textNode->NodeText;
+                    if (text.ToString() != null) {
+                        if (int.TryParse(text.ToString().Split("/")[0], out int playerCount)){
+                            PluginLog.Debug(playerCount.ToString());
+                            return playerCount;
+                        }
+                        else
+                        {
+                            PluginLog.Debug("Could not find playercount");
+                        }
+                    }
+                    PluginLog.Debug(text.ToString());
+                }
+            }
+
+            return 0;
+        }
+
         public unsafe string[] getAdventurerList() {
             var atkArrayDataHolder = RaptureAtkModule.Instance()->AtkArrayDataHolder;
             //Reads Atk Array Data from an OPEN player search window (specifically in instanced content)
@@ -50,7 +74,8 @@ namespace ProximityVoiceChat
             List<string> ret = new List<string>();
             int retsize = 0;
             string str = "";
-            for (int i = 0; i< array->Size; i++) {
+            var playerCount = getAdvListLength();
+            for (int i = 0; (i< array->Size && i < playerCount*4); i++) {
                 var isNull = (nint)array->StringArray[i] == 0;
                 if (isNull) { continue; }
                 if (i % 4 == 0) {

@@ -99,6 +99,8 @@ public class MapManager : IDisposable
             //TODO: Add other Exploratory Zone Categories to this, currently just testing on eureka
             case TerritoryIntendedUseEnum.Eureka:
                 return true;
+            case TerritoryIntendedUseEnum.Bozja:
+                return true;
             default:
                 return false;
         }
@@ -124,9 +126,9 @@ public class MapManager : IDisposable
             s.Append("_Ex");
             if (this.clientState.LocalPlayer != null)
             {
-                //s.Append(clientState.LocalPlayer.CurrentWorld.Value.DataCenter.Value.Name.ToString());
+                s.Append(clientState.LocalPlayer.CurrentWorld.Value.DataCenter.Value.Name.ToString());
                 //Couldn't get 2 seperate instances to test on relaibly so made it always return the same DC in name for testing (uncomment below and comment out above and then connect to 2 different DC's eureka zones to test)
-                s.Append("Materia");
+                //s.Append("Materia");
             }
             else
             {

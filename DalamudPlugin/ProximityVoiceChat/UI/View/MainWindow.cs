@@ -188,6 +188,12 @@ public class MainWindow : Window, IPluginUIView, IDisposable
             ij.openAdventurerList();
 
         }
+        if (ImGui.Button("Test Get Lenth"))
+        {
+            InstanceJoiner ij = new(gameGui);
+            ij.getAdvListLength();
+
+        }
         foreach (string player in players)
         {
             ImGui.Text($"{player}");

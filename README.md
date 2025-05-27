@@ -20,6 +20,9 @@ This means that going from an instance of 30 players to one of 20 would result i
 The Most Scuffed, probably dangerous, probably horrible workaround to the above problem: Just wipe the array,
 in theory wiping the array right before reloading it should be fine. But im not smart enough to know that for sure, but for now I decided to risk it to test other components of the plugin
 
+## Another Way?
+Browsing through the dalamud addon inspector I found the struct which displays the member list, perhaps with some more digging I might be able to find where the actual length of the *current* list of players is and only read that far into the ContentMemberList array, removing the need for clearing (and thus editing game memory)
+
 ## Signaling Server
 
 Logic added to signaling server to handle instance matching. Very rudimentary and fairly untested. Just checks all voice rooms to find the one with the most players from the current adventurer list. If no players from the current adventurer list can be found, creates a new on as usual.

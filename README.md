@@ -41,5 +41,6 @@ Currently the way to test the signaling server functionality is to first close t
 - Click Test Read
 - Join Public Voice Room
 
-- To force seperate instances I have been manually appending "Materia" to a portion of the room name in the MapManager GetCurrentMapPublicRoomName() method. there is a commented out line for this to instead append the current datacenter of the player.
-- Currently there is a new method in MapManager called inFieldOp(), however it is currently only configured for Eureka (where I was testing). This would need cases added for each other Field Op/Exploratory Zone.
+To force seperate instances I have been manually appending "Materia" to a portion of the room name in the MapManager GetCurrentMapPublicRoomName() method. there is a commented out line for this to instead append the current datacenter of the player.
+
+Currently there is a new method in MapManager called inFieldOp(), however it is currently only configured for Eureka (where I was testing). This would need cases added for each other Field Op/Exploratory Zone.

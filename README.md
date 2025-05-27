@@ -9,7 +9,7 @@ You will need to build your own version to use
 ## Test Buttons
 
 ### Test Open
-Sends command "/search" to game which opens the Adventurer List when in Field Op Content
+Sends command "/search" to game which opens the Adventurer List when in Field Op Content. 
 Uses ECommmons Library from NightmareXIV for its simple command handler
 
 ### Test Read
@@ -25,7 +25,7 @@ Browsing through the dalamud addon inspector I found the struct which displays t
 
 ## Signaling Server
 
-Logic added to signaling server to handle instance matching. Very rudimentary and fairly untested. Just checks all voice rooms to find the one with the most players from the current adventurer list. If no players from the current adventurer list can be found, creates a new on as usual.
+Logic added to signaling server to handle instance matching. Very rudimentary and fairly untested. Just checks all voice rooms to find the one with the most players from the current adventurer list. If no players from the current adventurer list can be found, creates a new one as usual.
 
 Ideally I would like to change this to work on some proportion of matching so that weird edge cases where whole groups leave and join another instance don't cause issues, but this will do for testing.
 

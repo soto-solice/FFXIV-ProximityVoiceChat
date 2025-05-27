@@ -34,3 +34,12 @@ TODO: Test with more players. Unfortunately I didn't get around to adding some d
 TODO: Some way to close the playersearch window from the plugin (need to spend some more time figuring out UI interraction automation, so far every attempt has led to a crash)
 
 TODO: Automation, so far haven't been able to schedule anything correctly such that on clicking join voice room the game: Clears ContentMemberList (where adv list is stored) -> Opens AdventurerList (or close->open OR refresh its contents if its already open) -> Reads AdventurerList once open (or loaded) -> Sends Join request -> Close AdventurerList.
+
+Currently the way to test the signaling server functionality is to first close the adventurer list then:
+- Click Test Clear (Required if Adventurer List/ContentMemberList has been populated with more data prior)
+- Click Test Open
+- Click Test Read
+- Join Public Voice Room
+
+- To force seperate instances I have been manually appending "Materia" to a portion of the room name in the MapManager GetCurrentMapPublicRoomName() method. there is a commented out line for this to instead append the current datacenter of the player.
+- Currently there is a new method in MapManager called inFieldOp(), however it is currently only configured for Eureka (where I was testing). This would need cases added for each other Field Op/Exploratory Zone.

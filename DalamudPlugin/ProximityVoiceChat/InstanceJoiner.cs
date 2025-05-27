@@ -1,29 +1,11 @@
-﻿using Dalamud;
-using Dalamud.Game.ClientState;
-using Dalamud.Game.Gui;
-using Dalamud.Interface.Utility;
-using Dalamud.Interface.Utility.Raii;
-using Dalamud.Logging;
-using Dalamud.Plugin.Services;
-using ECommons;
+﻿using Dalamud.Plugin.Services;
 using ECommons.Automation;
-using ECommons.DalamudServices;
 using ECommons.Logging;
-using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Component.GUI;
-using FFXIVClientStructs.STD.ContainerInterface;
-using FFXIVClientStructs.STD.Helper;
 using Lumina.Text.ReadOnly;
-using ProximityVoiceChat.Log;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+
 
 
 namespace ProximityVoiceChat

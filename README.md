@@ -25,7 +25,7 @@ Gets the text value of the UI Element Corresponding to the number of players in 
 in theory wiping the array right before reloading it should be fine. But im not smart enough to know that for sure, but for now I decided to risk it to test other components of the plugin~~
 
 ## ~~Another Way?~~
-~~Browsing through the dalamud addon inspector I found the struct which displays the member list, perhaps with some more digging I might be able to find where the actual length of the *current* list of players is and only read that far into the ContentMemberList array, removing the need for clearing (and thus editing game memory)~~~
+~~Browsing through the dalamud addon inspector I found the struct which displays the member list, perhaps with some more digging I might be able to find where the actual length of the *current* list of players is and only read that far into the ContentMemberList array, removing the need for clearing (and thus editing game memory)~~
 
 ## Signaling Server
 

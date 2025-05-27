@@ -27,5 +27,7 @@ Logic added to signaling server to handle instance matching. Very rudimentary an
 Ideally I would like to change this to work on some proportion of matching so that weird edge cases where whole groups leave and join another instance don't cause issues, but this will do for testing.
 
 TODO: Test with more players. Unfortunately I didn't get around to adding some dummy tests for selecting the correct instance with more players.
+
 TODO: Some way to close the playersearch window from the plugin (need to spend some more time figuring out UI interraction automation, so far every attempt has led to a crash)
+
 TODO: Automation, so far haven't been able to schedule anything correctly such that on clicking join voice room the game: Clears ContentMemberList (where adv list is stored) -> Opens AdventurerList (or close->open OR refresh its contents if its already open) -> Reads AdventurerList once open (or loaded) -> Sends Join request -> Close AdventurerList.

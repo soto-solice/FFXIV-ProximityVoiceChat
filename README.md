@@ -33,7 +33,7 @@ Logic added to signaling server to handle instance matching. Very rudimentary an
 
 Ideally I would like to change this to work on some proportion of matching so that weird edge cases where whole groups leave and join another instance don't cause issues, but this will do for testing.
 
-TODO: Test with more players. Unfortunately I didn't get around to adding some dummy tests for selecting the correct instance with more players.
+TODO: Remove scheduling jank. Right now reading the adventurer list needs delays to allow it to fully load, but it also can't be delayed on main thread. right now im getting around this by creating a new thread and using delays before calling back to the main thread when opening the adventurer list, then returns to background to wait for a few seconds before calling readAdventurerList again on the main thread. This also means when in field op I have to delay the connecting of the client to the server to allow for this to happen. Also if you don't wait like 3s before rejoining after leaving a voice room you will connect with an empty list of nearby players.
 
 TODO: Some way to close the playersearch window from the plugin (need to spend some more time figuring out UI interraction automation, so far every attempt has led to a crash)
 
@@ -47,4 +47,4 @@ Currently the way to test the signaling server functionality is to first close t
 
 To force seperate instances I have been manually appending "Materia" to a portion of the room name in the MapManager GetCurrentMapPublicRoomName() method. ~~there is a commented out line for this to instead append the current datacenter of the player.~~ Commented out line now default.
 
-Currently there is a new method in MapManager called inFieldOp(), however it is currently only configured for Eureka (where I was testing). This would need cases added for each other Field Op/Exploratory Zone.
+Currently there is a new method in MapManager called inFieldOp(), ~~however it is currently only configured for Eureka (where I was testing)~~ added bozja and occult crescent. This would need cases added for each other Field Op/Exploratory Zone.

@@ -1,4 +1,5 @@
 ﻿using Dalamud.Plugin.Services;
+using ECommons.Logging;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using Lumina.Excel.Sheets;
@@ -82,6 +83,7 @@ public class MapManager : IDisposable
             case TerritoryIntendedUseEnum.OceanFishing:
             case TerritoryIntendedUseEnum.DiademV3:
             case TerritoryIntendedUseEnum.Bozja:
+            case TerritoryIntendedUseEnum.OccultCrescent:
             default:
                 return false;
         }
@@ -100,6 +102,8 @@ public class MapManager : IDisposable
             case TerritoryIntendedUseEnum.Eureka:
                 return true;
             case TerritoryIntendedUseEnum.Bozja:
+                return true;
+            case TerritoryIntendedUseEnum.OccultCrescent:
                 return true;
             default:
                 return false;

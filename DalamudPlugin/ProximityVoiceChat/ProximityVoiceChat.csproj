@@ -56,4 +56,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="DalamudPackager.targets" />
+  </ItemGroup>
 </Project>

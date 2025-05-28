@@ -61,6 +61,7 @@ public class MainWindow : Window, IPluginUIView, IDisposable
     private readonly ConfigWindow configWindow;
     private readonly ConfigWindowPresenter configWindowPresenter;
     private readonly IGameGui gameGui;
+    private readonly IFramework framework;
 
     private string? createPrivateRoomButtonText;
     private bool configTabSelected;
@@ -76,7 +77,7 @@ public class MainWindow : Window, IPluginUIView, IDisposable
         Configuration configuration,
         ConfigWindow configWindow,
         ConfigWindowPresenter configWindowPresenter,
-        IGameGui gameGui) : base(PluginInitializer.Name)
+        IGameGui gameGui, IFramework framework) : base(PluginInitializer.Name)
     {
         this.windowSystem = windowSystem;
         this.pluginInterface = pluginInterface;
@@ -91,6 +92,7 @@ public class MainWindow : Window, IPluginUIView, IDisposable
         this.configWindowPresenter = configWindowPresenter;
         windowSystem.AddWindow(this);
         this.gameGui = gameGui;
+        this.framework = framework;
 
     }
 
@@ -165,15 +167,11 @@ public class MainWindow : Window, IPluginUIView, IDisposable
             this.joinVoiceRoom.OnNext(Unit.Default);
         }
         ImGui.EndDisabled();
-        var players = new string[10];
+        var players = new string[0];
         if (ImGui.Button("Test Read"))
         {
             InstanceJoiner ij = new(gameGui);
-            players = ij.getAdventurerList();
-            foreach (string player in players)
-            {
-                //ImGui.Text($"{player}");
-            }
+            //players = ij.getList();
 
         }
         if (ImGui.Button("Test Clear"))

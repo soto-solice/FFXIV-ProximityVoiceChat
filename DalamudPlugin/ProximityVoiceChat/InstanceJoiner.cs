@@ -1,10 +1,15 @@
 ﻿using Dalamud.Plugin.Services;
 using ECommons.Automation;
+using ECommons.Automation.UIInput;
 using ECommons.Logging;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using Lumina.Text.ReadOnly;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System;
+using Dalamud;
+using System.Windows.Forms.VisualStyles;
 
 
 
@@ -23,11 +28,13 @@ namespace ProximityVoiceChat
             var window = (AtkUnitBase*)gameGui.GetAddonByName("ContentMemberList", 1);
             if (window != null && window->IsVisible) {
                 //run command twice if window is already open to close & reopen it
-                //var componentNode = (FFXIVClientStructs.FFXIV.Component.GUI.AtkComponentWindow*)window->UldManager.NodeList[1];
+                //ClickHelper c = new();
+                //ECommons.Automation.UIInput.
+                //var componentNode = (FFXIVClientStructs.FFXIV.Component.GUI.AtkComponentWindow*)window->GetButtonNodeById;
                 //var buttonNode = (FFXIVClientStructs.FFXIV.Component.GUI.AtkComponentButton*)componentNode->UldManager.NodeList[6];
                 //var collisionNode = (FFXIVClientStructs.FFXIV.Component.GUI.AtkCollisionNode*)buttonNode->UldManager.NodeList[0];
                 //string[] clicks = ECommons.Automation.UIInput.ClickHelper.GetAvailableClicks();
-                //ECommons.Automation.UIInput.ClickHelperExtensions.ClickAddonButton(*(collisionNode), window);
+                //ECommons.Automation.UIInput.ClickHelperExtensions.ClickAddonButton(*(buttonNode), window);
                 PluginLog.Debug("cliccked");
             }
             Chat.ExecuteCommand("/search");
@@ -94,6 +101,12 @@ namespace ProximityVoiceChat
             }
             return ret.ToArray();
 
+        }
+
+        public unsafe bool isAdvOpen() {
+            var window = (AtkUnitBase*)gameGui.GetAddonByName("ContentMemberList", 1);
+            if (window == null || !window->IsFullyLoaded()) { return false; }
+            return true;
         }
     }
 }

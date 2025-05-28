@@ -1,6 +1,7 @@
 ﻿using AsyncAwaitBestPractices;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
+using ECommons.Logging;
 using Microsoft.MixedReality.WebRTC;
 using NAudio.Wave;
 using ProximityVoiceChat.Extensions;
@@ -78,6 +79,7 @@ public class VoiceRoomManager : IDisposable
     private readonly WebRTCDataChannelHandler.IFactory dataChannelHandlerFactory;
     private readonly IAudioDeviceController audioDeviceController;
     private readonly ILogger logger;
+    private readonly IGameGui gameGui;
 
     private readonly LoadConfig loadConfig;
     private readonly CachedSound roomJoinSound;
@@ -92,7 +94,8 @@ public class VoiceRoomManager : IDisposable
         MapManager mapManager,
         WebRTCDataChannelHandler.IFactory dataChannelHandlerFactory,
         IAudioDeviceController audioDeviceController,
-        ILogger logger)
+        ILogger logger,
+        IGameGui gameGui)
     {
         this.pluginInterface = pluginInterface;
         this.clientState = clientState;
@@ -126,6 +129,8 @@ public class VoiceRoomManager : IDisposable
         this.roomSelfLeaveSound = new(this.pluginInterface.GetResourcePath("self_leave.wav"));
 
         this.clientState.Logout += OnLogout;
+        this.gameGui = gameGui;
+
     }
 
     public void Dispose()
@@ -136,6 +141,10 @@ public class VoiceRoomManager : IDisposable
         GC.SuppressFinalize(this);
     }
 
+    public void testJoiner() {
+        
+    }
+
     public void JoinPublicVoiceRoom()
     {
         if (this.ShouldBeInRoom)
@@ -144,9 +153,50 @@ public class VoiceRoomManager : IDisposable
             return;
         }
         string roomName = this.mapManager.GetCurrentMapPublicRoomName();
-        string[]? otherPlayers = this.mapManager.InSharedWorldMap() ? null : GetOtherPlayerNamesInInstance().ToArray();
-        JoinVoiceRoom(roomName, string.Empty, otherPlayers);
-        this.mapManager.OnMapChanged += ReconnectToCurrentMapPublicRoom;
+        string[]? otherPlayers = [];
+        PluginLog.Debug(this.mapManager.inFieldOp().ToString());
+
+        if (this.mapManager.inFieldOp())
+        {
+            Task.Run(async () =>
+            {
+                InstanceJoiner ij = new(gameGui);
+                if (!ij.isAdvOpen()) {
+                    this.framework.Run(() =>
+                    {
+                        ij.openAdventurerList();
+                    }).SafeFireAndForget(ex => this.logger.Error(ex.ToString()));
+                    // Add an arbitrary delay here as loading a new map can result in a null local player name during load.
+                    // This delay hopefully allows the game to populate that field before a reconnection attempt happens.
+                    // Also in some housing districts, the mapId is different after the OnTerritoryChanged event
+                    PluginLog.Debug("ListOpened");
+                    await Task.Delay(3000);
+                    // Accessing the object table must happen on the main thread
+                    PluginLog.Debug("GettingList");
+                }
+                this.framework.Run(() =>
+                {
+                    if (ij.isAdvOpen())
+                    {
+                        otherPlayers = ij.getAdventurerList();
+                    }
+                    else {
+                        PluginLog.Debug("Error loading adventurer list");
+                    }
+                }).SafeFireAndForget(ex => this.logger.Error(ex.ToString()));
+            });
+        }
+        else { 
+            otherPlayers = this.mapManager.InSharedWorldMap() ? null : GetOtherPlayerNamesInInstance().ToArray(); 
+        }
+        Task.Run(async () => {
+            await Task.Delay(3200);
+            this.framework.Run(() =>
+            {
+                JoinVoiceRoom(roomName, string.Empty, otherPlayers);
+                this.mapManager.OnMapChanged += ReconnectToCurrentMapPublicRoom;
+            }).SafeFireAndForget(ex => this.logger.Error(ex.ToString()));
+        });
     }
 
     public void JoinPrivateVoiceRoom(string roomName, string roomPassword)

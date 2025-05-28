@@ -1,10 +1,10 @@
 {
   "Author": "Ricimon",
-  "Name": "ProximityVoiceChat",
-  "Punchline":  "",
-  "Description": "An in-game voice chat plugin with character proximity detection.",
-  "RepoUrl": "https://github.com/Ricimon/FFXIV-ProximityVoiceChat",
-  "IconUrl": "https://raw.githubusercontent.com/Ricimon/FFXIV-ProximityVoiceChat/master/images/icon.png",
+  "Name": "ProximityVoiceChatFieldOpFix",
+  "Punchline": "",
+  "Description": "A fork of PVC with Field Op Fixes",
+  "RepoUrl": "https://github.com/soto-solice/FFXIV-ProximityVoiceChat",
+  "IconUrl": "https://github.com/soto-solice/FFXIV-ProximityVoiceChat/master/images/icon.png",
   "InternalName": "ProximityVoiceChat",
   "ApplicableVersion": "any",
   "Tags": [

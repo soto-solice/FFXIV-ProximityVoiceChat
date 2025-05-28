@@ -118,4 +118,7 @@ public enum TerritoryIntendedUseEnum
 
     [Description("Bozja")]
     Bozja = 48,
+
+    [Description("Occult Crescent")]
+    OccultCrescent = 61,
 }
